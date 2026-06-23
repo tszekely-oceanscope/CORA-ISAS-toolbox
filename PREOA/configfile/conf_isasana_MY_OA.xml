@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<CONFIG_ISASANA7>
+
+    # Metadata information for NC files
+    <NCmeta>
+
+        <LANG>En</LANG>
+        <PROJECT_NAME>CMEMS Ins-TAC</PROJECT_NAME>
+        <DATA_MANAGER>Tanguy Szekely</DATA_MANAGER>
+        <INSTITUTION>OceanScope</INSTITUTION>
+        <DATA_SET>CORA OA</DATA_SET>
+        <REFERENCES>Szekely et al. 2020, doi: 10.17882/46219 </REFERENCES>
+    </NCmeta>
+
+    # Repertoires
+    <directories>
+
+        <DirRawDmProfiles>/home/ref-copernicus-insitu/INSITU_GLO_NRT_OBSERVATIONS_013_030/glo_multiparameter_nrt/monthly/</DirRawDmProfiles>
+        <DirRawDmTsg>/home/ref-copernicus-insitu/INSITU_GLO_NRT_OBSERVATIONS_013_030/glo_multiparameter_nrt/monthly/</DirRawDmTsg>
+        <DirQciDmProfiles>XXX</DirQciDmProfiles>
+        <DirQciDmTsg>XXX</DirQciDmTsg>
+        <DirOxyAdjDmProfiles>XXX</DirOxyAdjDmProfiles>
+        <DirZstRtCorio>XXX</DirZstRtCorio>
+        <DirZstDm>/mnt/speedstorage/CORA/2026-11//ISAS//</DirZstDm>
+        <SubDirZstDmProfiles>ZST_DM_TIMESERIES/</SubDirZstDmProfiles>
+        <SubDirZstDmTsg>ZST_DM_TIMESERIES/</SubDirZstDmTsg>
+        <DirIsasConfStd>/mnt/speedstorage/CORA/CLIM/</DirIsasConfStd>
+        <DirAreaDef>/mnt/speedstorage/CORA/CLIM//areadef_ISAS_17/</DirAreaDef>
+        <DirResuPlot>/mnt/speedstorage/CORA/2026-11//ISAS_RESU/</DirResuPlot>
+        <DirPreoa>/mnt/speedstorage/CORA/2026-11//ISAS_RESU/</DirPreoa>
+        <DirPostoa>/mnt/speedstorage/CORA/2026-11//ISAS_RESU/</DirPostoa>
+        <DirAnaResu>/mnt/speedstorage/CORA/2026-11//ISAS_RESU/</DirAnaResu>
+        <DirOaCalcul>/home1/datawork/co_dev/coriolis_dev/spool/co04/co0401/ISAS_7_0/REP_OA/ISAS_RUN/</DirOaCalcul>
+    </directories>
+    # Nom de fichiers
+    <filenames>
+
+        <FilenameClimTS>woa18_A5B7_ISASint</FilenameClimTS>
+        <FilenameStdTS>ISAS17_DMFD_CLIM_ann</FilenameStdTS>
+        <FilenameClimOxy>XXX</FilenameClimOxy>
+        <FilenameStdOxy>XXX</FilenameStdOxy>
+        <FilenameAna>OA_CORA5.2_</FilenameAna>
+        <PrfZstdDm>ZST</PrfZstdDm>
+    </filenames>
+
+    # Nom de fichiers 'sans _'
+    <filenames2>
+        <FilenameBathy>bathy_isas17</FilenameBathy>
+        <FilenameMask>ISAS17_Mask</FilenameMask>
+        <FilelistDmArgo>DmArgo_aoml_test</FilelistDmArgo>
+        <FilelistPreoa>Preoa_ARGO_ITP_MM_MO_TSG_test2</FilelistPreoa>
+    </filenames2>
+
+    # Time and space limits
+    <TimeSpaceAna>
+        <area_limits> [-90 +90 -180 +180] </area_limits> # Definition of the area (for data selection)
+    </TimeSpaceAna>
+
+
+    # Parameters
+    <Parameters>
+        <PlotZst> 0 </PlotZst> # Plotting option for ZST  0 = no plots,1 = summary plot + alert plot,
+        # 2 = 1 + ctrl plot, 3 = 2 + plot each profile + pause
+        <RedDxMax> 10 </RedDxMax> # maximum allowed distance (km)
+        <RedDtMax> 5 </RedDtMax> # maximum allowed interval of time (days)
+        <RedQcMax> 4 </RedQcMax> # maximum interpolation quality flag used to include data into average
+        <RedOpt24> 1 </RedOpt24> # applies 24h average of 1 level profiles (0=no, 1=yes)
+        <RedTsgDxMax> 100 </RedTsgDxMax> # maximum allowed distance (km)
+        <RedTsgDtMax> 10 </RedTsgDtMax> # maximum allowed interval of time (days)
+        <RedTsgQcMax> 2 </RedTsgQcMax> # maximum interpolation quality flag used to include data into average
+        <CritClimStd1> 2.5 </CritClimStd1> # number of standard deviations allowed for climatology comparison
+        <CritClimStrat1> 2 </CritClimStrat1> # add a tolerance to take into account the strong stratifications
+        <CritSpike1> 100 </CritSpike1> # number used for spike detection (used derivative)
+        <CritClimStd2> 80 </CritClimStd2> # number of standard deviations allowed for climatology comparison
+        <CritClimStrat2> 10 </CritClimStrat2> # add a tolerance to take into account the strong stratifications
+        <CritSpike2> 2000 </CritSpike2> # number used for spike detection (used derivative)
+        <NbProfMax> 3000 </NbProfMax> # Maximum number of raw profiles found to form one zst file
+        <NbIntMin> 3 </NbIntMin> # Minimum number of data points for interpolating a profile
+        <PresErrMax> 20  </PresErrMax> # Max error allowed for pressure (data eliminated if error larger)
+        <PresErrMin> 1  </PresErrMin> # Min error allowed for pressure (value used if error smaller)
+        <TempErrMax> 1  </TempErrMax> # Max error allowed for temperarture (data eliminated if error larger)
+        <TempErrMin> 0.01  </TempErrMin> # Min error allowed for temperature (value used if error smaller)
+        <TempErrDmArgo> 0.01  </TempErrDmArgo> # Default measurement error associated used if no error information in file
+        <TempErrDmTsg> 0.1  </TempErrDmTsg> # Default measurement error associated used if no error information in file
+        <TempErrDmTsgSO> 0.1  </TempErrDmTsgSO> # Default measurement error associated used if no error information in file
+        <TempErrDmITP> 0.01  </TempErrDmITP> # Default measurement error associated used if no error information in file
+        <TempErrDmMM> 0.1  </TempErrDmMM> # Default measurement error associated used if no error information in file
+        <TempErrDmMO> 0.01  </TempErrDmMO> # Default measurement error associated used if no error information in file
+        <TempErrDmHydC> 0.002  </TempErrDmHydC> # Default measurement error associated used if no error information in file
+        <TempErrDmProfiles> 0.01  </TempErrDmProfiles> # Default measurement error associated used if no error information in file
+        <PsalErrMax> 1  </PsalErrMax> # Max error allowed for salinity (data eliminated if error larger)
+        <PsalErrMin> 0.01  </PsalErrMin> # Min error allowed for salinity (value used if error smaller)
+        <PsalErrDmArgo> 0.01  </PsalErrDmArgo> # Default measurement error associated used if no error information in file
+        <PsalErrDmTsg> 0.01  </PsalErrDmTsg> # Default measurement error associated used if no error information in file
+        <PsalErrDmTsgSO> 0.01  </PsalErrDmTsgSO> # Default measurement error associated used if no error information in file
+        <PsalErrDmITP> 0.01  </PsalErrDmITP> # Default measurement error associated used if no error information in file
+        <PsalErrDmMM> 0.1  </PsalErrDmMM> # Default measurement error associated used if no error information in file
+        <PsalErrDmMO> 0.01  </PsalErrDmMO> # Default measurement error associated used if no error information in file
+        <PsalErrDmHydC> 0.002  </PsalErrDmHydC> # Default measurement error associated used if no error information in file
+        <DoxyErrMax> 50  </DoxyErrMax> # Max error allowed for oxygene (data eliminated if error larger)
+        <DoxyErrMin> 5  </DoxyErrMin> # Min error allowed for oxygene (value used if error smaller)
+        <DoxyErrDmArgo> 15  </DoxyErrDmArgo>   # Default measurement error associated used if no error information in file
+        <UseAdjDmArgo> 1  </UseAdjDmArgo> # use_adjust=1  : use adjusted value if exists
+        <UseAdjDmTsg> 1  </UseAdjDmTsg> # use_adjust=1  : use adjusted value if exists
+        <UseAdjDmTsgSO> 1  </UseAdjDmTsgSO> # use_adjust=1  : use adjusted value if exists
+	    <UseAdjDmITP> 1  </UseAdjDmITP> # use_adjust=1  : use adjusted value if exists
+        <UseAdjDmMM> 1  </UseAdjDmMM> # use_adjust=1  : use adjusted value if exists
+        <UseAdjDmMO> 1  </UseAdjDmMO> # use_adjust=1  : use adjusted value if exists
+        <UseAdjDmHydC> 1  </UseAdjDmHydC> # use_adjust=1  : use adjusted value if exists
+        <UseAdjDmProfiles> 0  </UseAdjDmProfiles> # use_adjust=1  : use adjusted value if exists
+        <BathyMin> 15  </BathyMin> # minimun depth required to use the data (a simple way to eliminate coastal stations)
+        <PreoaTimeInt> 42  </PreoaTimeInt> # time interval (days) around date of analysis.Use data from jest-PreoaTimeInt to jest+PreoaTimeInt
+        <PreoaQcMax> 4  </PreoaQcMax> # max ZST-QC taken into account (scale: QC_interp)
+        <PostoaFiltErrMax> 90  </PostoaFiltErrMax> # Spatial filtering across area border where err>err_max
+        <PostoaPlotLev> 10 </PostoaPlotLev> # Level to be plotted (in meter) (if PostoaPlotLev negative,no plot)
+        <W1> 1 </W1> # L1 covariance weight
+        <W2> 2 </W2> # L2 covariance weight
+        <W3> 8 </W3> # unresolved scales covariance weight
+        <FactVar> 1.5 </FactVar> # Factor mult. variance
+        <TsgSODeph> 10 </TsgSODeph> # Nominal deph of water intake for salinity and temperature measurement (TSG SO-SSS)
+    </Parameters>
+
+       # Multiple parameters
+    <Mparameters>
+
+        <QcTS> [1 2 5]  </QcTS> # flags ok Temp and Psal, Doxy
+        <QcZP> [0 1 2 5]  </QcZP> # flags ok Pres and depth
+        <QcXY> [0 1 2 5 8]  </QcXY> # flags ok Position and date
+        <ErrExtArgo> [1.5 2] </ErrExtArgo> # error multiplicative factor for Argo surface extrapolation
+        <ErrExtTsg> [1.5 2] </ErrExtTsg> # error multiplicative factor for TSG surface extrapolation
+        <ErrExtTsgSO> [1.5 2] </ErrExtTsgSO> # error multiplicative factor for TSG surface extrapolation
+        <PreoaAreaList> [101:161,201:238,301:382,401:404,501:506] </PreoaAreaList> # list of geographical areas to analyze
+        <!--PreoaAreaList> [107 112 113] </PreoaAreaList -->
+        <!--PreoaAreaList> [123] </PreoaAreaList -->
+        <!--PreoaDephAna> [0, 5, 20, 100] </PreoaDephAna--> # List of levels selected for the analysis (the closest standard levels will be selected)
+        <PreoaDephAna> [-5500] </PreoaDephAna> > # Levels selected for the analysis: keep all the levels down to deph_max
+        <!--PreoaDephAna> [-10] </PreoaDephAna--> # Levels selected for the analysis: keep all the levels down to deph_max
+        <PreoaWmoInstrOut> [] </PreoaWmoInstrOut> # WMO instrument type excluded : exclude XBTs of all types
+        <!--PreoaWmoInstrOut> [] </PreoaWmoInstrOut--> # WMO instrument type excluded : no instrument type excluded
+    </Mparameters>
+
+    # Multiple parameters type string
+    <MparamStr>
+        <PreoaTypList> DmTsg,DmProfiles  </PreoaTypList> # List of file types to process
+        <ClimRefOATS>  M  </ClimRefOATS> # clim_ref_oa=M (month) or clim_ref_oa=Y (year)
+    </MparamStr>
+
+
+</CONFIG_ISASANA7>
+
+
+
+
