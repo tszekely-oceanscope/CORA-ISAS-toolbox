@@ -1710,7 +1710,7 @@ def ANA_ini(conf_file_name):
     return INIT
 
 def POSTOA_main(config_fname, DATE_EST, VarName, PLOT_DISP,
-                nam_atlas_pres, nam_clim):
+                nam_atlas_pres, nam_clim, input_dir=None, output_dir=None):
     """
     Post-traitement OA : agrège les fichiers par zone, fusionne les champs,
     ajoute la climatologie et sauvegarde les fichiers de résultats.
@@ -1723,6 +1723,10 @@ def POSTOA_main(config_fname, DATE_EST, VarName, PLOT_DISP,
     PLOT_DISP      : int  - 0 = pas de plots
     nam_atlas_pres : str  - fichier atlas pression
     nam_clim       : str  - fichier climatologie
+    input_dir      : str, optional - directory containing PREOA zone files
+                     (overrides DirPostoa/POSTOA_DATA in XML)
+    output_dir     : str, optional - root output directory
+                     (overrides DirPostoa in XML)
     """
 
     # ------------------------------------------------------------------
@@ -1730,6 +1734,8 @@ def POSTOA_main(config_fname, DATE_EST, VarName, PLOT_DISP,
     # ------------------------------------------------------------------
     INIT = ANA_ini(config_fname)
     INIT['PLOT_DISP'] = PLOT_DISP
+    if output_dir is not None:
+        INIT['DirPostoa'] = output_dir if output_dir.endswith('/') else output_dir + '/'
     lev_plt = -1 if PLOT_DISP == 0 else INIT.PostoaPlotLev
 
     if VarName == 'DOXY':
@@ -1776,7 +1782,11 @@ def POSTOA_main(config_fname, DATE_EST, VarName, PLOT_DISP,
     dir_POSTOA_log   = os.path.join(INIT['DirPostoa'], 'POSTOA_LOG')
     dir_POSTOA_field = os.path.join(INIT['DirPostoa'], 'field', str(yy))
     dir_POSTOA_data  = os.path.join(INIT['DirPostoa'], 'data',  str(yy))
-    dir_OA_DATA      = os.path.join(INIT['DirPostoa'], 'POSTOA_DATA', VarName)
+    if input_dir is not None:
+        _inp = input_dir if input_dir.endswith('/') else input_dir + '/'
+        dir_OA_DATA = os.path.join(_inp, VarName)
+    else:
+        dir_OA_DATA = os.path.join(INIT['DirPostoa'], 'POSTOA_DATA', VarName)
     dir_clim         = INIT['DirIsasConfStd']
 
     for d in [dir_POSTOA_log, dir_POSTOA_field,

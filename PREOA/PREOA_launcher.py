@@ -1,6 +1,6 @@
-import sys 
-import os
 import sys
+import os
+import argparse
 import time
 import logging
 from datetime import datetime, timezone
@@ -2122,7 +2122,8 @@ def datenum_from_str(s, fmt):
     return (d - date(1, 1, 1)).days + 367
 
 
-def PREOA_main(config_fname, date_ana, VarName, PLOT_DISP, FilenameClimTS=None):
+def PREOA_main(config_fname, date_ana, VarName, PLOT_DISP, FilenameClimTS=None,
+               input_dir=None, output_dir=None):
     """
     Prepares the dataset for each area.
 
@@ -2146,6 +2147,11 @@ def PREOA_main(config_fname, date_ana, VarName, PLOT_DISP, FilenameClimTS=None):
     # -----------------------------------------------------------------------
     INIT = ANA_ini(config_fname)
     INIT['PLOT_DISP'] = PLOT_DISP
+
+    if input_dir is not None:
+        INIT['DirZstDm'] = input_dir if input_dir.endswith('/') else input_dir + '/'
+    if output_dir is not None:
+        INIT['DirPreoa'] = output_dir if output_dir.endswith('/') else output_dir + '/'
 
     if VarName == 'DOXY':
         INIT.nam_clim = INIT.NamClimOxy
@@ -2572,26 +2578,53 @@ def PREOA_main(config_fname, date_ana, VarName, PLOT_DISP, FilenameClimTS=None):
     preoa_err.close()
 
 
-def PREOA_launcher(input_str):
+def PREOA_launcher(year, month, input_dir=None, output_dir=None,
+                   config_fname=None, varname='PSAL'):
     """
-    Entry point: parse a YYYYMM string and run PREOA_main for the 15th of that month.
+    Entry point: run PREOA_main for the 15th of the given year/month.
 
     Parameters
     ----------
-    input_str : str - date string in 'YYYYMM' format (e.g. '201501')
+    year       : int - analysis year (e.g. 2010)
+    month      : int - analysis month (1-12)
+    input_dir  : str, optional - CORA input directory, overrides DirZstDm in XML
+    output_dir : str, optional - zones output directory, overrides DirPreoa in XML
+    config_fname : str, optional - XML config file (default: ./configfile/conf_isasana_MY_OA.xml)
+    varname    : str - variable name (default: 'PSAL')
     """
-    yy = int(input_str[0:4])
-    mm = int(input_str[4:])
+    if config_fname is None:
+        config_fname = './configfile/conf_isasana_MY_OA.xml'
 
-    config_fname = './configfile/conf_isasana_MY_OA.xml'
-    PLOT_DISP = 0
-    VarName = 'PSAL'
-    date_ana = [15, mm, yy]
+    PREOA_main(config_fname, [15, month, year], varname, 0,
+               input_dir=input_dir, output_dir=output_dir)
 
-    PREOA_main(config_fname, date_ana, VarName, PLOT_DISP)
 
 if __name__ == '__main__':
-    PREOA_launcher(sys.argv[1])
+    parser = argparse.ArgumentParser(
+        description='PREOA launcher — prepare observation areas for ISAS OA')
+    parser.add_argument('--input',  required=True,
+                        help='Path to the CORA input directory (overrides DirZstDm in XML)')
+    parser.add_argument('--output', required=True,
+                        help='Path to the zones output directory (overrides DirPreoa in XML)')
+    parser.add_argument('--year',   required=True, type=int,
+                        help='Analysis year (e.g. 2010)')
+    parser.add_argument('--month',  required=True, type=int,
+                        help='Analysis month (1-12, or zero-padded e.g. 01)')
+    parser.add_argument('--config',
+                        default='./configfile/conf_isasana_MY_OA.xml',
+                        help='XML configuration file (default: ./configfile/conf_isasana_MY_OA.xml)')
+    parser.add_argument('--var', default='PSAL',
+                        help='Variable name to process (default: PSAL)')
+    args = parser.parse_args()
+
+    PREOA_launcher(
+        year=args.year,
+        month=args.month,
+        input_dir=args.input,
+        output_dir=args.output,
+        config_fname=args.config,
+        varname=args.var,
+    )
 
 
 
